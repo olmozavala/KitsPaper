@@ -12,6 +12,7 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{lipsum}
+\usepackage{graphicx}
 
 \title{Nested 3D neural networks for kidney and tumor segmentation}
 
@@ -67,11 +68,27 @@
 
 \subsection{Preprocessing}
 \label{sec:prepro}
+The proprocessing steps performed are:
+\begin{enumerate}
+    \item Resample the image to a resolution of $2 \times 2 \times 2$ mm. 
+    \item Crop a cube of size $168^3$ from the center of the image. 
+    \item Normalize the intensities to a range of 0 to 1.
+\end{enumerate}
 
 \subsection{Neural Network Architecture}
 \label{sec:nnarc}
-The proposed method contains two NN with the same architecture, one is used to segment the kidneys and the other one is used to segment the tumors. 
+The proposed method contains two NN with the same architecture, one is used to segment the kidneys and the other one 
+is used to segment the tumors. 
 
-Each NN is a 3D U-Net 
+Each NN is a 3D U-Net with 14 convolutional layers. Each convolutional layer has a relu function as activation and uses
+filter sizes of $3\times 3 \times 3$. The input size is the preprocessed image with size $168^3$. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[totalheight=.20\textheight]{imgs/nn.png}
+    \caption{NN architecture }
+    \label{fig:mobile1}
+\end{figure}
+
 
 \end{document}
