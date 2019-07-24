@@ -18,35 +18,30 @@
 
 
 \author{
-  David S.~Hippocampus\thanks{Use footnote for providing further
-    information about author (webpage, alternative
-    address)---\emph{not} for acknowledging funding agencies.} \\
-  Department of Computer Science\\
-  Cranberry-Lemon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
+  Olmo Zavala-RomeroDavid 
+  %\thanks{Use footnote for providing further webpage, alternative address)---\emph{not} for acknowledging funding agencies.} \\
+  Department of Radiation Oncology\\
+  University of Miami, Miller School of Medicine
+    1475 NW 12th Avenue
+  Miami, FL, PA 33136\\
+  \texttt{osz1@miami.edu} \\
   %% examples of more authors
-   \And
- Elias D.~Striatum \\
-  Department of Electrical Engineering\\
-  Mount-Sheikh University\\
-  Santa Narimana, Levand \\
-  \texttt{stariate@ee.mount-sheikh.edu} \\
-  %% \AND
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
+  \And
+  Javier \\
+  \texttt{} \\
+  \AND
+  Ignacio\\
+  \texttt{} \\
+  \AND
+  Radka\\
+  \texttt{} \\
+  \AND
+  Adrian\\
+  \texttt{} \\
+  Jorge\\
+  \texttt{} \\
+  Rosario\\
+  \texttt{} \\
 }
 
 \begin{document}
@@ -80,8 +75,12 @@ The proprocessing steps performed are:
 The proposed method contains two NN with the same architecture, one is used to segment the kidneys and the other one 
 is used to segment the tumors. 
 
-Each NN is a 3D U-Net with 14 convolutional layers. Each convolutional layer has a relu function as activation and uses
-filter sizes of $3\times 3 \times 3$. The input size is the preprocessed image with size $168^3$. 
+Each NN is a 3D U-Net with 14 convolutional layers. Each convolutional layer uses relu as the activation function and
+all the filters are of size of $3\times 3 \times 3$. The input size is the preprocessed image with size $168^3$. 
+Last layer is sigmoid.
+Uses SGD batchnormalization.
+The loss function is negative DSC.
+For the tumor the loss function only takes into account the values inside the predicted kindey. 
 
 \begin{figure}[h]
     \centering
