@@ -105,7 +105,6 @@ network is shown in figure \ref{fig:arc}.  Each convolutional layer has relu as 
 filters size $3\times 3 \times 3$, with the exception of the last convolutional layer which 
 uses a sigmoid activation function. Each convolutional layer in the decoding phase has batch normalization to improve the generalization of the network. Finally, the dimensions of the input and output images is $168^3$. 
 
-The training dataset is randomly splitted into $90\%$ for training and $10\%$ for validation.  
 The network uses stochastic gradient descent as the optimization method, the number of steps per epoch is
 100 and the number of steps when computing the metrics on the validation set is 20. The trainig is
 stopped after 1000 iterations or when the loss function on the validation set do not improves after
@@ -135,6 +134,50 @@ For the final classifications, the network is used with the trained weights to p
 After that, only the top three structures  larger than 10 cubic centimeters are kept (if available). Then, the tumors
 are segmented using the same network but the proper weights for predicting for tumors. The resulting output is masked
 by the predicted kidneys in the previous step. Finally both segmentaitons are interpolated into its original CT resolution using Nearest Neighbor implementation in Simple ITK. 
+
+\section{Results}
+\label{sec:results}
+The training dataset was randomly splitted into $90\%$ for training and $10\%$ for validation. 
+We did not have a change to perform 10-fold cross validation before the submission, but
+will do for the final manuscript. The results obtained by each contour of interest are shown on table \ref{table:res}.
+The results are separated by the resolution used (ROI and original) and by the dataset used (training, validation, overall). 
+
+\begin{table}[h]
+    \centering
+
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline 
+        \textbf{DataSet} & \textbf{Average DSC } & \textbf{Kidney DSC } & \textbf{Tumor DSC } & \textbf{Kidney ROI DSC } & \textbf{Tumor ROI DSC }\\
+        \hline 
+        \textbf{Training} && $0.92\pm0.07$ & $0.30\pm0.30$ & $0.93\pm0.08$ & $0.36\pm0.35$ \\
+        \hline 
+        \textbf{Validation} && $0.89\pm0.06$ & $0.43\pm0.38$ & $0.89\pm0.07$ & $0.46\pm0.40$\\
+        \hline 
+        \textbf{Overall}  & $0.62\pm0.17$ & $0.91\pm0.07$ & $0.32\pm0.32$ & $0.93\pm0.08$ & $0.37\pm0.36$\\
+        \hline 
+    \end{tabular}
+
+    \caption{Results obtained for the segmentation of kidneys and tumors in the ROI and the orignal resolution. }
+    \label{table:res}
+\end{table}
+
+The results for segmenting the kindeys are much better, with an average DSC of $0.89\pm0.06$ on the validation set, compared
+with only $0.43\pm0.38$ for the tumors. This shows that finding tumors is a much complicated task that segmenting kindeys. 
+
+Figure \ref{fig:res1} shows two examples of the obtained kidney and tumor segmentations at the axial and sagittal planes. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[totalheight=.20\textheight]{imgs/ex1.jpg}
+    \includegraphics[totalheight=.20\textheight]{imgs/ex2.jpg}
+    \newline
+    \includegraphics[totalheight=.15\textheight]{imgs/ex3.jpg}
+    \includegraphics[totalheight=.20\textheight]{imgs/ex4.jpg}
+    \caption{NN architecture }
+    \label{fig:res1}
+\end{figure}
+
+
 
 \section{Conslusions}
 \label{sec:conlusions}
